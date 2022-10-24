@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HealthDisplay : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Player _player;
+    [SerializeField] private TMP_Text _healthDisplay;
+
+    private void OnEnable()
     {
-        
+        _player.HealthChanged += OnHealthChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _player.HealthChanged -= OnHealthChanged;
+    }
+
+    private void OnHealthChanged(int health)
+    {
+        _healthDisplay.text = health.ToString();
     }
 }

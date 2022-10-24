@@ -1,21 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(PlayerMover))]
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
-    private PlayerMover _playerMover;
+    [SerializeField] private PlayerMover _playerMover;
 
-    private void Start()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        _playerMover = GetComponent<PlayerMover>();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-            _playerMover.TryMoveLeft();
-        if (Input.GetKeyDown(KeyCode.D))
+        if (eventData.delta.x > 0)
             _playerMover.TryMoveRigth();
+            
+        if(eventData.delta.x < 0)
+            _playerMover.TryMoveLeft();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
     }
 }

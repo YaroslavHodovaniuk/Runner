@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Spawner : ObjectPool
 {
-    [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private float _secondsBetweenSpawn;
+    [SerializeField] private GameObject[] _enemyTemplates;
+    [SerializeField] private float _secondsBetweenSpawn; //save
     [SerializeField] private Transform[] _spawnPoints;
+    [SerializeField] private float _maxSpawnTime;
+    [SerializeField] private float _subtractTime;
 
     private float _elapsedTime = 0;
-    private void Start()
+    private void Awake()
     {
-        Initialize(_enemyPrefab);
+        Initialize(_enemyTemplates);
     }
     private void Update()
     {
@@ -27,6 +29,8 @@ public class Spawner : ObjectPool
                 SetEnemy(enemy, _spawnPoints[spawnPointNumber].position);
             }
 
+            if (_secondsBetweenSpawn >= _maxSpawnTime)
+                _secondsBetweenSpawn -= _subtractTime;
         }
     }
 
