@@ -28,8 +28,7 @@ public class Spawner : ObjectPool
                 int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
                 SetEnemy(enemy, _spawnPoints[spawnPointNumber].position);
             }
-
-            if (_secondsBetweenSpawn >= _maxSpawnTime)
+            if (_secondsBetweenSpawn > _maxSpawnTime)
                 _secondsBetweenSpawn -= _subtractTime;
         }
     }
@@ -39,4 +38,6 @@ public class Spawner : ObjectPool
         enemy.SetActive(true);
         enemy.transform.position = spawnpoint;
     }
+
+
 }

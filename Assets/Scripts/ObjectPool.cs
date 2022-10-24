@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject _container;
     [SerializeField] private int _capacity;
+    public int Capacity { get => _capacity; }
 
     private List<GameObject> _pool = new List<GameObject>();
 
@@ -36,5 +38,15 @@ public class ObjectPool : MonoBehaviour
         result = _pool.FirstOrDefault(p => p.activeSelf == false);
 
         return result != null;
+    }
+
+    public void AddCapacity(int capacity)
+    {
+        _capacity += capacity;
+        PlayerPrefs.SetInt("Capacity", _capacity);
+    }
+    public void SetCapacity(int newCapacity)
+    {
+        _capacity = newCapacity;
     }
 }

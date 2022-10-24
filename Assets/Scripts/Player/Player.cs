@@ -5,8 +5,10 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _health; //save
-    [SerializeField] private int _coins; //save
+    [SerializeField] private int _health;
+    public int Health { get => _health; } //saved
+    [SerializeField] private int _coins;
+    public int Coins { get => _coins; } //saved
 
     public event UnityAction<int> HealthChanged;
     public event UnityAction<int> CoinsChanged;
@@ -34,18 +36,17 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("Coins", _coins);
         CoinsChanged?.Invoke(_coins);
     }
-    public void AddHealth()
+    public void AddHealth(int health)
     {
-        int price = 10;
-        if(price <= _coins)
-        {
-            _coins -= price;
-            PlayerPrefs.SetInt("Coins", _coins);
-            _health++;
-            PlayerPrefs.SetInt("Health", _health);
-            HealthChanged?.Invoke(_health);
-            CoinsChanged?.Invoke(_coins);
-        }
+        _health += health;
+        PlayerPrefs.SetInt("Health", _health);
+        HealthChanged?.Invoke(_health);
+    }
+    public void SubstractCoin(int coins)
+    {
+        _coins -= coins;
+        PlayerPrefs.SetInt("Coins", _coins);
+        CoinsChanged?.Invoke(_coins);
     }
     public void Die()
     {

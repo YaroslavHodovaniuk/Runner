@@ -100,6 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2
+  _secondsBetweenSpeedUp: 3
+  _speedUp: 0.1
+  _spawners: []
 --- !u!61 &-2236976938309075635
 BoxCollider2D:
   m_ObjectHideFlags: 0
