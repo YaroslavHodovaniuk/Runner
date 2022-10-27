@@ -6,8 +6,11 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
-    public int Health { get => _health; } //saved
     [SerializeField] private int _coins;
+
+    private int _firstStart = 0;
+
+    public int Health { get => _health; } //saved
     public int Coins { get => _coins; } //saved
 
     public event UnityAction<int> HealthChanged;
@@ -16,6 +19,17 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _firstStart = PlayerPrefs.GetInt("FirstStart");
+        if (_firstStart == 0)
+        {
+            PlayerPrefs.SetInt("Health",3);
+            PlayerPrefs.SetInt("Coins", 0);
+            PlayerPrefs.SetInt("HealthPrice", 25);
+            PlayerPrefs.SetInt("MoneyPrice", 100);
+            PlayerPrefs.SetInt("Capacity", 1);
+            PlayerPrefs.SetInt("FirstStart", 1);
+        }
+
         _health = PlayerPrefs.GetInt("Health");
         _coins = PlayerPrefs.GetInt("Coins");
         HealthChanged?.Invoke(_health);
@@ -36,17 +50,23 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("Coins", _coins);
         CoinsChanged?.Invoke(_coins);
     }
+    public void SubstractCoin(int coins)
+    {
+        _coins -= coins;
+        PlayerPrefs.SetInt("Coins", _coins);
+        CoinsChanged?.Invoke(_coins);
+    }
+
     public void AddHealth(int health)
     {
         _health += health;
         PlayerPrefs.SetInt("Health", _health);
         HealthChanged?.Invoke(_health);
     }
-    public void SubstractCoin(int coins)
+    public void Revive(int health)
     {
-        _coins -= coins;
-        PlayerPrefs.SetInt("Coins", _coins);
-        CoinsChanged?.Invoke(_coins);
+        _health = health;
+        HealthChanged?.Invoke(_health);
     }
     public void Die()
     {

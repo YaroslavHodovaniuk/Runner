@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasGroup))]
 public class GameOverScreen : MonoBehaviour
 {
+    [SerializeField] private Button _reviveButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Player _player;
 
@@ -17,6 +18,7 @@ public class GameOverScreen : MonoBehaviour
     {
         _player.Died += OnDied;
         _restartButton.onClick.AddListener(OnRestartButtonClick);
+        _reviveButton.onClick.AddListener(OnReviveButtonClick);
     }
 
     private void OnDisable()
@@ -45,5 +47,13 @@ public class GameOverScreen : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+    private void OnReviveButtonClick()
+    {
+        Time.timeScale = 1;
+        _gameOverGroup.alpha = 0;
+        _gameOverGroup.interactable = false;
+        _gameOverGroup.blocksRaycasts = false;
+        _player.Revive(PlayerPrefs.GetInt("Health"));
     }
 }
