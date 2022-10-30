@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Advertisements;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -55,5 +57,6 @@ public class GameOverScreen : MonoBehaviour
         _gameOverGroup.interactable = false;
         _gameOverGroup.blocksRaycasts = false;
         _player.Revive(PlayerPrefs.GetInt("Health"));
+        
     }
 }
